@@ -1,0 +1,37 @@
+app:
+  image: castorinop/nextcloud
+#  volumes:
+#     - ./data:/data
+  links:
+   - db
+
+db:
+  image: castorinop/mariadb
+  environment:
+   - MYSQL_DATABASE=nextcloud
+   - MYSQL_USER=root
+   - MYSQL_PASSWORD=secret
+
+#  volumes:
+#    - ./db:/var/lib/mysql
+
+fpm:
+  image: castorinop/php-fpm
+  links:
+   - db
+  volumes_from:
+   - app
+  volumes:
+   - ./config/nextcloud.ini:/etc/php5/fpm.d/nextcloud.ini
+
+nginx:
+ image: nginx:stable-alpine
+ ports:
+  - "80:80"
+ links: 
+  - fpm
+ volumes_from:
+   - fpm
+ volumes:
+  - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
+

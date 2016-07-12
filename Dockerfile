@@ -1,0 +1,33 @@
+FROM alpine
+
+#https://updates.nextcloud.com/server/
+# FIXME: get latest version
+# curl -L https://updates.nextcloud.org/updater_server/?version=9x0x0x12x1448709225.0768x1448709281xstablexx2015-10-19T18:44:30+00:00%208ee2009de36e01a9866404f07722892f84c16e3e -A 'Nextcloud Updater' |sed 's@<version>\(.*\)</version>@\1@g'
+ENV VERSION 9.0.51
+ENV URLBASE http://download.nextcloud.com/server/releases
+
+RUN mkdir /app
+WORKDIR /app
+
+RUN apk add curl --update
+
+#FIXME: use https://download.nextcloud.com/download/community/setup-nextcloud.php
+RUN curl -Lk $URLBASE/nextcloud-${VERSION}.tar.bz2 > nextcloud-${VERSION}.tar.bz2 && \
+ curl -Lk $URLBASE/nextcloud-${VERSION}.tar.bz2.md5 > nextcloud-${VERSION}.tar.bz2.md5 && \
+ md5sum nextcloud-${VERSION}.tar.bz2 && tar jxf nextcloud-${VERSION}.tar.bz2 && \
+ rm nextcloud-${VERSION}.tar.bz2
+
+
+VOLUME ["/data"]
+VOLUME ["/app/nextcloud/config"]
+VOLUME ["/app/nextcloud"]
+
+ADD run /usr/local/bin/run
+RUN chmod +x /usr/local/bin/run
+RUN apk add --update php5-zip php5-gd php5-cli php5-pdo_mysql php5-json php5-posix php5-dom php5-xmlreader php5-xml php5-ctype php5-curl php5-zlib php5-pcntl 
+
+USER nobody
+ENTRYPOINT ["/usr/local/bin/run"]
+
+
+

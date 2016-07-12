@@ -1,0 +1,37 @@
+#!/bin/sh
+
+if [ ! "`php /app/nextcloud/occ config:system:get installed`" == "false" ]; then 
+ echo "configuranding nextcloud"
+ cd /app/nextcloud
+ echo  -n "wait db ";
+ while 	! nc -z -w 4 db 3306; do
+	echo -n ".";
+	sleep 1;
+ done
+ 
+ echo " ready";
+
+ php occ  maintenance:install \
+	--database "mysql" \
+	--database-host "db" \
+	--database-name "nextcloud" \
+	--database-user "root" \
+	--database-pass "secret" \
+	--admin-user "admin" \
+	--admin-pass "secret" \
+	--data-dir=/data
+
+ php occ upgrade
+ php occ app:enable galleryplus
+ php occ app:enable documents
+ php occ config:system:set defaultapp --value=activity
+ php occ config:system:set trusted_domain --value=127.0.0.1
+ php occ config:system:set filelocking.enabled --value='true'
+ php occ config:system:set memcache.local --value='\OC\Memcache\APCu'
+
+fi
+
+while true; do
+	php -f /app/nextcloud/cron.php
+	sleep 300
+done
