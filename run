@@ -1,6 +1,12 @@
 #!/bin/sh
+# FIX permission for volumes.
 
-if [ ! "`php /app/nextcloud/occ config:system:get installed`" == "false" ]; then 
+chown nobody /data
+chown nobody /app -R
+
+sudo -u nobody /app/nextcloud/occ config:system:get installed
+needinstall=$?
+if [ $needinstall ]; then
  echo "configuranding nextcloud"
  cd /app/nextcloud
  echo  -n "wait db ";
@@ -11,7 +17,7 @@ if [ ! "`php /app/nextcloud/occ config:system:get installed`" == "false" ]; then
  
  echo " ready";
 
- php occ  maintenance:install \
+ sudo -u nobody /app/nextcloud/occ  maintenance:install \
 	--database "mysql" \
 	--database-host "db" \
 	--database-name "nextcloud" \
@@ -21,17 +27,21 @@ if [ ! "`php /app/nextcloud/occ config:system:get installed`" == "false" ]; then
 	--admin-pass "secret" \
 	--data-dir=/data
 
- php occ upgrade
- php occ app:enable galleryplus
- php occ app:enable documents
- php occ config:system:set defaultapp --value=activity
- php occ config:system:set trusted_domain --value=127.0.0.1
- php occ config:system:set filelocking.enabled --value='true'
- php occ config:system:set memcache.local --value='\OC\Memcache\APCu'
+ sudo -u nobody /app/nextcloud/occ upgrade
+ sudo -u nobody /app/nextcloud/occ app:enable galleryplus
+ sudo -u nobody /app/nextcloud/occ app:enable documents
+ sudo -u nobody /app/nextcloud/occ config:system:set defaultapp --value=activity
+ sudo -u nobody /app/nextcloud/occ config:system:set trusted_domain --value=127.0.0.1
+ sudo -u nobody /app/nextcloud/occ config:system:set filelocking.enabled --value='true'
+ sudo -u nobody /app/nextcloud/occ config:system:set memcache.local --value='\OC\Memcache\APCu'
 
 fi
-
+COUNTER=300
 while true; do
-	php -f /app/nextcloud/cron.php
-	sleep 300
+	COUNTER=$((COUNTER+1))
+	if [ $COUNTER -gt 300 ]; then
+		sudo -u nobody php  /app/nextcloud/cron.php
+		COUNTER=0
+	fi
+	sleep 1
 done

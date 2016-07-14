@@ -17,16 +17,14 @@ RUN curl -Lk $URLBASE/nextcloud-${VERSION}.tar.bz2 > nextcloud-${VERSION}.tar.bz
  md5sum nextcloud-${VERSION}.tar.bz2 && tar jxf nextcloud-${VERSION}.tar.bz2 && \
  rm nextcloud-${VERSION}.tar.bz2
 
-
 VOLUME ["/data"]
 VOLUME ["/app/nextcloud/config"]
 VOLUME ["/app/nextcloud"]
 
 ADD run /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
-RUN apk add --update php5-zip php5-gd php5-cli php5-pdo_mysql php5-json php5-posix php5-dom php5-xmlreader php5-xml php5-ctype php5-curl php5-zlib php5-pcntl 
+RUN apk add --update php5-zip php5-gd php5-cli php5-pdo_mysql php5-json php5-posix php5-dom php5-xmlreader php5-xml php5-ctype php5-curl php5-zlib php5-pcntl sudo
 
-USER nobody
 ENTRYPOINT ["/usr/local/bin/run"]
 
 
