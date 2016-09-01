@@ -2,6 +2,7 @@ app:
   image: castorinop/nextcloud
 #  volumes:
 #     - ./data:/data
+#     - ./config:/app/nextcloud/config
   links:
    - db
 
