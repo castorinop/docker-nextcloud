@@ -17,6 +17,9 @@ RUN curl -Lk $URLBASE/nextcloud-${VERSION}.tar.bz2 > nextcloud-${VERSION}.tar.bz
  md5sum nextcloud-${VERSION}.tar.bz2 && tar jxf nextcloud-${VERSION}.tar.bz2 && \
  rm nextcloud-${VERSION}.tar.bz2
 
+COPY noarch/occ.sh /usr/local/bin/occ
+RUN chmod +x /app/nextcloud/occ /usr/local/bin/occ
+
 VOLUME ["/data"]
 VOLUME ["/app/nextcloud/config"]
 VOLUME ["/app/nextcloud"]
