@@ -30,5 +30,10 @@ RUN apk add --update php5-zip php5-gd php5-cli php5-pdo_mysql php5-json php5-pos
 
 ENTRYPOINT ["/usr/local/bin/run"]
 
+WORKDIR /app/nextcloud
 
+COPY config/nginx.conf /etc/nginx/conf.d/nextcloud.conf
+VOLUME ["/etc/nginx/conf.d"]
 
+COPY config/nextcloud.ini /etc/php5/conf.d/nextcloud.ini
+VOLUME ["/etc/php5/conf.d"]
