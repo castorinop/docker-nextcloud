@@ -22,17 +22,12 @@ fpm:
    - db
   volumes_from:
    - app
-  volumes:
-   - ./config/nextcloud.ini:/etc/php5/fpm.d/nextcloud.ini
 
 nginx:
  image: nginx:stable-alpine
  ports:
   - "80:80"
- links: 
+ links:
   - fpm
  volumes_from:
-   - fpm
- volumes:
-  - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
-
+   - app
