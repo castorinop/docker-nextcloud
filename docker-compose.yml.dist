@@ -17,7 +17,7 @@ db:
 #    - ./db:/var/lib/mysql
 
 fpm:
-  image: castorinop/php-fpm
+  image: castorinop/php-fpm-nextcloud
   links:
    - db
   volumes_from:
