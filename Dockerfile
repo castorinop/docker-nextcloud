@@ -1,4 +1,4 @@
-FROM alpine
+FROM castorinop/php-nextcloud
 
 #https://updates.nextcloud.com/server/
 # FIXME: get latest version
@@ -24,9 +24,9 @@ VOLUME ["/data"]
 VOLUME ["/app/nextcloud/config"]
 VOLUME ["/app/nextcloud"]
 
-ADD run /usr/local/bin/run
+COPY run /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
-RUN apk add --update php5-zip php5-gd php5-cli php5-pdo_mysql php5-json php5-posix php5-dom php5-xmlreader php5-xml php5-ctype php5-curl php5-zlib php5-pcntl sudo
+RUN apk add --update sudo
 
 ENTRYPOINT ["/usr/local/bin/run"]
 
