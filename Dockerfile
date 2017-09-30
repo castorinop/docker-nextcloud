@@ -35,6 +35,7 @@ WORKDIR /app/nextcloud
 COPY config/nginx.conf /etc/nginx/conf.d/nextcloud.conf
 VOLUME ["/etc/nginx/conf.d"]
 
-COPY config/nextcloud.ini /etc/php5/conf.d/nextcloud.ini
-COPY config/opcache.ini /etc/php5/conf.d/opcache.ini
-VOLUME ["/etc/php5/conf.d"]
+COPY config/nextcloud.ini /etc/php7/conf.d/nextcloud.ini
+COPY config/opcache.ini /etc/php7/conf.d/opcache.ini
+COPY config/apcu.ini /etc/php7/conf.d/apcu.ini
+VOLUME ["/etc/php7/conf.d"]
