@@ -3,7 +3,7 @@ FROM castorinop/php-nextcloud
 #https://updates.nextcloud.com/server/
 # FIXME: get latest version
 # curl -L https://updates.nextcloud.org/updater_server/?version=9x0x0x12x1448709225.0768x1448709281xstablexx2015-10-19T18:44:30+00:00%208ee2009de36e01a9866404f07722892f84c16e3e -A 'Nextcloud Updater' |sed 's@<version>\(.*\)</version>@\1@g'
-ENV VERSION 12.0.4
+ENV VERSION 12.0.5
 ENV URLBASE http://download.nextcloud.com/server/releases
 
 RUN mkdir /app
