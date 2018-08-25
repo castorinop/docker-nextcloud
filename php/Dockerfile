@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-RUN apk add --update \
+RUN apk add --nocache --update \
 	php7-ctype \
 	php7-dom \
 	php7-gd \
