@@ -4,7 +4,7 @@ FROM castorinop/php-nextcloud
 # FIXME: get latest version
 # curl -L https://updates.nextcloud.org/updater_server/?version=9x0x0x12x1448709225.0768x1448709281xstablexx2015-10-19T18:44:30+00:00%208ee2009de36e01a9866404f07722892f84c16e3e -A 'Nextcloud Updater' |sed 's@<version>\(.*\)</version>@\1@g'
 ENV URLBASE http://download.nextcloud.com/server/releases
-ENV VERSION 15.0.8
+ENV VERSION 16.0.3
 
 RUN mkdir /app
 WORKDIR /app
