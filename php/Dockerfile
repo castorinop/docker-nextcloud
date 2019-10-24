@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.9
 
 RUN apk add --nocache --update \
 	php7-ctype \
@@ -31,5 +31,5 @@ RUN apk add --nocache --update \
 	php7-redis \
 	php7-pcntl \
 	php7-phar \
-	php7-opcache
-
+	php7-tokenizer \ 
+	php7-opcache 
