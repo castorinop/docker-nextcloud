@@ -61,3 +61,5 @@ RUN set -ex \
     } | tee /etc/php7/php-fpm.d/xdebug.ini
 
 ENV PHP_INI_SCAN_DIR='/etc/php7/conf.d:/etc/php7/php-fpm.d/'
+
+COPY config/*ini /etc/php7/php-fpm.d/
