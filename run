@@ -4,11 +4,6 @@
 chown nobody /data
 chown nobody /app -R
 
-sudo -u nobody /app/nextcloud/occ config:system:get installed
-needinstall=$?
-if [ $needinstall ]; then
- echo "configuranding nextcloud"
- cd /app/nextcloud
  echo  -n "wait db ";
  while 	! nc -z -w 4 db 3306; do
 	echo -n ".";
@@ -17,6 +12,11 @@ if [ $needinstall ]; then
  
  echo " ready";
 
+sudo -u nobody /app/nextcloud/occ config:system:get installed
+needinstall=$?
+if [ $needinstall ]; then
+ echo "configuranding nextcloud"
+ cd /app/nextcloud
  sudo -u nobody /app/nextcloud/occ  maintenance:install \
 	--database "mysql" \
 	--database-host "db" \
