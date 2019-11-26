@@ -34,6 +34,7 @@ if [ $needinstall ]; then
  sudo -u nobody /app/nextcloud/occ config:system:set trusted_domain --value=127.0.0.1
  sudo -u nobody /app/nextcloud/occ config:system:set filelocking.enabled --value='true'
  sudo -u nobody /app/nextcloud/occ config:system:set memcache.local --value='\OC\Memcache\APCu'
+ sudo -u nobody /app/nextcloud/occ config:system:set updater.release.channel --value=production
 
 fi
 COUNTER=300
