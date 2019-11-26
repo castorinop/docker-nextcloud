@@ -30,6 +30,8 @@ if [ $needinstall ]; then
  sudo -u nobody /app/nextcloud/occ upgrade
  sudo -u nobody /app/nextcloud/occ app:enable galleryplus
  sudo -u nobody /app/nextcloud/occ app:enable documents
+ sudo -u nobody /app/nextcloud/occ db:convert-filecache-bigint
+ sudo -u nobody /app/nextcloud/occ db:add-missing-indices
  sudo -u nobody /app/nextcloud/occ config:system:set defaultapp --value=activity
  sudo -u nobody /app/nextcloud/occ config:system:set trusted_domain --value=127.0.0.1
  sudo -u nobody /app/nextcloud/occ config:system:set filelocking.enabled --value='true'
